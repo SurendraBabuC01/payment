@@ -1,6 +1,8 @@
-FROM           node
+FROM           python:3.6
 RUN            mkdir /app
 WORKDIR        /app
-COPY           server.js .
-COPY           node_modules node_modules
-ENTRYPOINT     [ "node", "server.js" ]
+COPY           requirements.txt .
+COPY           payment.ini .
+COPY           payment.py .
+COPY           rabbitmq.py .
+ENTRYPOINT     [ "uwsgi", "--ini", "payment.ini" ]
